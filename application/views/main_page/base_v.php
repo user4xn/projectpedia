@@ -22,6 +22,10 @@
 
   <!-- SCRIPT -->
 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script src="<?= base_url('assets'); ?>/assets_main/js/jquery-3.5.1.min.js"></script>
 
   <script src="<?= base_url('assets'); ?>/assets_main/js/bootstrap.bundle.min.js"></script>

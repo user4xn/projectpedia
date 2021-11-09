@@ -32,8 +32,18 @@ h6, .h6 {
   border-radius: 25px;
 }
 
-.t-overflow-elips{
-  white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
+.block-ellipsis {
+  display: block;
+  display: -webkit-box;
+  max-width: 100%;
+  height: 56px;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btn-circle {
