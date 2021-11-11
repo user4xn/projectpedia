@@ -32,43 +32,47 @@
         line-height: 1;
       }
     </style>
-    <div class="row mt-3">
 
-    <?php for ($i=0; $i < 8; $i++) { ?>
+    <?php foreach ($getRandomCategory as $rcat){ 
+      $getDoc = $this->db->query('SELECT document.id,judul,file,document.desc,jenis,harga,to_base64(thumbnail) as thumbnail64, created_at, label FROM document JOIN category ON document.id = category.id_document WHERE label = "'.$rcat['label'].'"')->result_array();;
+    ?>
+      <div class="h4 m-0 ml-1 text-dark mt-3 font-weight-bold"><?= $rcat['label'] ?></div>
+      <div class="row mt-1 owl-carousel">
+        <?php foreach ($getDoc as $theDoc) { ?>
+          <div class="the-doc">
+            <div class="p-1 recent-document bg-white">
+                  <div class="row p-3">   
+                    <div class="doc-item col-6 col-md-12">
+                      <a href="<?= base_url('Docs/read/').md5($theDoc['id']).'/'.urlencode((str_replace(' ', '-', $theDoc['judul']))); ?>">
+                        <img class="doc-img" src="data:image/png;base64,<?= $theDoc['thumbnail64'] ?>" alt="">
+                      </a>
+                    </div>
 
-      <div class="col-md-4 col-lg-3 py-3 mb-3">
-        <div class="p-1 recent-document bg-white">
-              <div class="row">   
-                <div class="doc-item col-6 col-md-12">
-                  <a href="<?= base_url('Docs/read') ?>">
-                    <img class="doc-img" src="<?= base_url('assets')?>/assets_main/img/portfolio/work-1.jpg" alt="">
-                  </a>
-                </div>
-
-                <div class="col-6 col-md-12">
-                  <div class="subhead"> Dokumen </div>
-                  <p class="font-weight-bold doc-title">Startup Accelerator Programmes: B Practice Guide</p>
-                  <div class="text-secondary block-ellipsis">
-                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                     consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                     proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <div class="col-6 col-md-12">
+                      <div class="subhead"> 
+                        <?php if($theDoc['harga'] != '0'){ ?>
+                          <div class="badge badge-warning">PREMIUM</div>
+                        <?php }else{ ?>
+                          <div class="badge badge-info">FREE</div>
+                        <?php } ?>
+                      </div>
+                      <p class="font-weight-bold doc-title"><?= $theDoc['judul'] ?></p>
+                      <div class="text-secondary block-ellipsis">
+                         <?= $theDoc['desc'] ?>
+                      </div>
+                      <div class="mt-3 align-text-bottom text-right">
+                        <div class="subhead float-left text-primary"> <?= $theDoc['jenis'] ?> </div>
+                        <button class="btn btn-info btn-circle"><i class="mai-bookmark"></i></button>
+                        <button class="btn btn-info btn-circle"><i class="mai-download"></i></button>
+                      </div>
+                    </div>
                   </div>
-                  <div class="mt-3 align-text-bottom text-right">
-                    <div class="subhead float-left text-primary"> PDF </div>
-                    <button class="btn btn-info btn-circle"><i class="mai-bookmark"></i></button>
-                    <button class="btn btn-info btn-circle"><i class="mai-download"></i></button>
-                  </div>
-                </div>
-              </div>
-        </div>
+            </div>
+          </div>
+        <?php } ?>
       </div>
-
     <?php } ?>
-   
-    </div>
+
   </div> <!-- .container -->
   
   <div class="container d-none pb-5" id="menu_category" style="transition: ease 0.3s ; min-height: 700px;">
@@ -104,5 +108,32 @@
 			$('#menu_document').removeClass('d-none');
 			$('#menu_category').addClass('d-none');
 		});
+
+    $(".owl-carousel").owlCarousel({
+        margin:10,
+        loop:true,
+        nav:true,
+        autoplay: 3000,
+        responsive : {
+          // breakpoint from 0 up
+          0 : {
+            items : 1,
+            
+          },
+          // breakpoint from 480 up
+          480 : {
+            items : 1,
+          
+          },
+          // breakpoint from 768 up
+          768 : {
+            items : 3,
+          },
+          // breakpoint from 768 up
+          1024 : {
+            items : 4,
+          }
+        }
+    });
 	});
 </script>

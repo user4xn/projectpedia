@@ -49,20 +49,45 @@
 			}
 
 
-
 			function index(){
 
-				$data['page'] 		= '';
+				$data['page'] 				= 'Document';
+
+				$data['getRandomCategory']	= $this->Docs_m->getRandCategory();
 
 				$this->template->load('main_page/base_v', 'main_page/docs_v',$data);
 
 			}
 
-			function read(){
-				
-				$data['page'] 		= '';
+			function jsonDocs(){
 
-				$this->template->load('main_page/base_v', 'main_page/read_v',$data);
+				$fetch['result'] = $this->Docs_m->getDocs();
+
+				if ($fetch) {
+					echo json_encode($fetch);
+				}
+
+			}
+
+
+			function read(){
+
+				$id 			= $this->uri->segment(3);
+				
+				$title 			= $this->uri->segment(4);
+				
+
+				$isValid 		= $this->Docs_m->checkValidDocs($id, $title);
+
+				if($isValid){
+					$data['page'] 	= 'Document';
+
+					$data['fetchDoc']   = $isValid;
+
+					$this->template->load('main_page/base_v', 'main_page/read_v',$data);
+				}else{
+					redirect('P/err404');
+				}
 			}
 
 	}

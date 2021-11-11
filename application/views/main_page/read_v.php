@@ -37,20 +37,22 @@
 				<div id="my_pdf_viewer">
 				<div class="px-3">
 					<blockquote class="blockquote text-left">
-					  <p class="h3 mb-0">Startup Accelerator Programmes: B Practice Guide</p>
+					  <p class="h3 mb-0"><?= $fetchDoc['judul'] ?></p>
 					  <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
 					</blockquote>
 
 					<div>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						<?= $fetchDoc['desc'] ?>
 					</div>
 					<div class="mt-3 align-text-bottom text-right">
-	                   <div class="subhead float-left text-primary"> <span class="badge badge-primary">PDF</span> <span class="badge badge-warning">Premium</span></div>
+	                   <div class="subhead float-left text-primary">
+	                   	<span class="badge badge-primary"><?= $fetchDoc['jenis'] ?></span>
+	                   	  <?php if($fetchDoc['harga'] != '0'){ ?>
+                          <div class="badge badge-warning">PREMIUM</div>
+                        <?php }else{ ?>
+                          <div class="badge badge-info">FREE</div>
+                        <?php } ?>
+	                   </div>
 	                   <span class="text-secondary ml-3">Like (378)</span>
 	                   <button class="btn btn-info btn-circle"><i class="mai-thumbs-up"></i></button>
 	                   <span class="text-secondary ml-3">Dislike (48)</span>
@@ -87,10 +89,10 @@
 </div>
 
 <script>
-	var session = 2; 
+	var session = 0; 
 	var myState = { pdf: null, currentPage: 1, zoom: 1.2 } 
 	
-	pdfjsLib.getDocument('<?= base_url() ?>/assets/doc/PEP Full.pdf').then((pdf) => {
+	pdfjsLib.getDocument('<?= base_url('assets/doc/').$fetchDoc['file'] ?>').then((pdf) => {
 		myState.pdf = pdf;
 		render();
 	});
@@ -121,24 +123,34 @@
 		if(myState.pdf == null || myState.currentPage > myState.pdf._pdfInfo.numPages) 
 		return;
 
-		if(session === 1){
-			myState.currentPage += 1; 
-			document.getElementById("current_page").value = myState.currentPage; 
-			render(); 
-		}else{
-			if(myState.currentPage < 3){
+		<?php if($fetchDoc['harga'] == 0){ ?>
+
 				myState.currentPage += 1; 
 				document.getElementById("current_page").value = myState.currentPage; 
-				render(); 	
+				render(); 
+
+		<?php }else{ ?>
+
+			if(session === 1){
+				myState.currentPage += 1; 
+				document.getElementById("current_page").value = myState.currentPage; 
+				render(); 
 			}else{
-				Swal.fire({
-				  icon: 'error',
-				  title: 'Oops...',
-				  text: 'Masuk Untuk Melanjutkan Membaca',
-				  footer: 'Tidak punya akun? <a href=""> Daftar</a>'
-				})
+				if(myState.currentPage < 3){
+					myState.currentPage += 1; 
+					document.getElementById("current_page").value = myState.currentPage; 
+					render(); 	
+				}else{
+					Swal.fire({
+					  icon: 'error',
+					  title: 'Oops...',
+					  text: 'Masuk Untuk Melanjutkan Membaca',
+					  footer: 'Tidak punya akun? <a href=""> Daftar</a>'
+					})
+				}
 			}
-		}
+			
+		<?php } ?>
 	}); 
 
 	document.getElementById('current_page').addEventListener('keypress', (e) => { 
@@ -169,6 +181,5 @@
 		
 		 	myState.zoom -= 0.1; 
 		 	render(); 
-		
 	});
 </script>
