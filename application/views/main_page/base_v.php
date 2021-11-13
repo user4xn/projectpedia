@@ -60,10 +60,10 @@
 
         <div class="navbar-collapse collapse" id="navbarContent">
           <ul class="navbar-nav ml-auto pt-3 pt-lg-0">
-            <li class="nav-item active">
+            <li class="nav-item <?= $isHere = ($page == 'home') ? 'active' : ''; ?>">
               <a href="<?= site_url('Main') ?>" class="nav-link m-1">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?= $isHere = ($page == 'docs') ? 'active' : ''; ?>">
               <a href="<?= site_url('Docs') ?>" class="nav-link m-1">Document</a>
             </li>
             <li class="nav-item">

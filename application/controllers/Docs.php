@@ -51,7 +51,7 @@
 
 			function index(){
 
-				$data['page'] 				= 'Document';
+				$data['page'] 				= 'docs';
 
 				$data['getRandomCategory']	= $this->Docs_m->getRandCategory();
 
@@ -80,7 +80,7 @@
 				$isValid 		= $this->Docs_m->checkValidDocs($id, $title);
 
 				if($isValid){
-					$data['page'] 	= 'Document';
+					$data['page'] 	= 'docs';
 
 					$data['fetchDoc']   = $isValid;
 

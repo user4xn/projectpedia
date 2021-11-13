@@ -52,7 +52,7 @@
 
 			function index(){
 
-				$data['page'] 		= '';
+				$data['page'] 		= 'home';
 
 				$this->template->load('main_page/base_v', 'main_page/index_v',$data);
 
