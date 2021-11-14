@@ -13,63 +13,50 @@
   <div class="container animated fadeIn animated-faster" id="menu_document" style="transition: ease 0.3s ;">
     <div class="row align-items-center">
       <div class="col-md-8 col-xs-4 py-3">
-        <input type="text" id="search" name="search" placeholder="Cari Disini ..." class="input form-control border-primary rounded-pill">
+        <form method="POST" action="<?= site_url('Docs/search') ?>">
+          <input type="text" id="search" name="search" placeholder="Cari Disini ..." class="input form-control border-primary rounded-pill">
+        </form>
       </div>
       <div class="col-md-4 py-3 text-md-right">
         <a href="#" id="open_category" class="btn btn-primary btn-block rounded-pill font-weight-bold">Kategori</a>
       </div>
     </div>
-    <style type="text/css">
-    	.doc-item{
-    		height: 250px !important;
-    	}
-      .doc-img{
-        height: 100%;object-fit: cover;
-        object-position: center;
-        border: 1px solid #ccc
-      }
-      .doc-title{
-        line-height: 1;
-      }
-    </style>
 
-    <?php foreach ($getRandomCategory as $rcat){ 
-      $getDoc = $this->db->query('SELECT document.id,judul,file,document.desc,jenis,harga,to_base64(thumbnail) as thumbnail64, created_at, label FROM document JOIN category ON document.id = category.id_document WHERE label = "'.$rcat['label'].'"')->result_array();;
-    ?>
-      <div class="h4 m-0 ml-1 text-dark mt-3 font-weight-bold"><?= $rcat['label'] ?></div>
-      <div class="row mt-1 owl-carousel">
-        <?php foreach ($getDoc as $theDoc) { ?>
+    <?php $num = 0; foreach ($randCat as $category){ $num++;?>
+      <div class="h4 m-0 ml-1 text-dark mt-3 font-weight-bold"><?= $category['label']; ?></div>
+      <div class="row mt-1 owl-carousel" id="owl<?= $num  ?>">
+        <?php foreach($docArray[$category['label']] as $indexData){?>
           <div class="the-doc">
             <div class="p-1 recent-document bg-white">
                   <div class="row p-3">   
                     <div class="doc-item col-6 col-md-12">
-                      <a href="<?= base_url('Docs/read/').md5($theDoc['id']).'/'.urlencode((str_replace(' ', '-', $theDoc['judul']))); ?>">
-                        <img class="doc-img" src="data:image/png;base64,<?= $theDoc['thumbnail64'] ?>" alt="">
+                      <a href="<?= base_url('Docs/read/').md5($indexData['id']).'/'.urlencode((str_replace(' ', '-', $indexData['judul']))); ?>">
+                        <img class="doc-img" src="data:image/png;base64,<?= $indexData['thumbnail64']; ?>" alt="">
                       </a>
                     </div>
 
                     <div class="col-6 col-md-12">
                       <div class="subhead"> 
-                        <?php if($theDoc['harga'] != '0'){ ?>
+                        <?php if($indexData['harga'] != '0'){ ?>
                           <div class="badge badge-warning">PREMIUM</div>
                         <?php }else{ ?>
                           <div class="badge badge-info">FREE</div>
                         <?php } ?>
                       </div>
-                      <p class="font-weight-bold doc-title"><?= $theDoc['judul'] ?></p>
+                      <p class="font-weight-bold doc-title"><?= $indexData['judul']; ?></p>
                       <div class="text-secondary block-ellipsis">
-                         <?= $theDoc['desc'] ?>
+                         <?= $indexData['desc']; ?>
                       </div>
                       <div class="mt-3 align-text-bottom text-right">
-                        <div class="subhead float-left text-primary"> <?= $theDoc['jenis'] ?> </div>
-                        <button class="btn btn-info btn-circle"><i class="mai-bookmark"></i></button>
-                        <button class="btn btn-info btn-circle"><i class="mai-download"></i></button>
+                        <div class="subhead float-left text-primary"> <?= $indexData['jenis']; ?> </div>
+                        <button class="btn btn-dark btn-circle"><i class="fas fa-bookmark"></i></button>
+                        <button class="btn btn-dark btn-circle"><i class="fas fa-download"></i></button>
                       </div>
                     </div>
                   </div>
             </div>
           </div>
-        <?php } ?>
+        <?php } ?>  
       </div>
     <?php } ?>
 
@@ -85,11 +72,9 @@
       </div>
     </div>
     <ul class="mt-3 categories animated fadeIn animated-faster">
-        <li class="p-2"><a href="#">Food <span>(12)</span></a></li>
-        <li class="p-2"><a href="#">Travel <span>(22)</span></a></li>
-        <li class="p-2"><a href="#">Lifestyle <span>(37)</span></a></li>
-        <li class="p-2"><a href="#">Business <span>(42)</span></a></li>
-        <li class="p-2"><a href="#">Adventure <span>(14)</span></a></li>
+      <?php foreach ($categoryArray as $theCat) { ?>
+        <li class="p-2"><a href="<?= site_url('Docs/search/').$theCat['label'] ?>"><?= $theCat['label'] ?> <span><?= $theCat['num_doc'] ?></span></a></li>
+      <?php } ?>
     </ul>
   </div> <!-- .container -->
 
@@ -109,31 +94,33 @@
 			$('#menu_category').addClass('d-none');
 		});
 
-    $(".owl-carousel").owlCarousel({
-        margin:10,
-        loop:true,
-        nav:true,
-        autoplay: 3000,
-        responsive : {
-          // breakpoint from 0 up
-          0 : {
-            items : 1,
-            
-          },
-          // breakpoint from 480 up
-          480 : {
-            items : 1,
-          
-          },
-          // breakpoint from 768 up
-          768 : {
-            items : 3,
-          },
-          // breakpoint from 768 up
-          1024 : {
-            items : 4,
-          }
-        }
-    });
-	});
+    $("#owl1, #owl2, #owl3").each( function(){
+        $(this).owlCarousel({
+            margin:10,
+            loop:true,
+            nav:true,
+            autoplay: 3000,
+            responsive : {
+              // breakpoint from 0 up
+              0 : {
+                items : 1,
+                
+              },
+              // breakpoint from 480 up
+              480 : {
+                items : 1,
+              
+              },
+              // breakpoint from 768 up
+              768 : {
+                items : 3,
+              },
+              // breakpoint from 768 up
+              1024 : {
+                items : 4,
+              }
+            }
+        });
+    	});
+  })
 </script>

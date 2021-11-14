@@ -54,9 +54,12 @@
 
 				$data['page'] 		= 'home';
 
+				$data['getDocs']	= $this->Main_m->getDocs(8);
+
 				$this->template->load('main_page/base_v', 'main_page/index_v',$data);
 
 			}
+
 
 	}
 

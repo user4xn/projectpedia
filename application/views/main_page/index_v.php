@@ -8,10 +8,10 @@
             <!-- MOBILE VER -->
             <div class="h4 subhead text-white">baca kapan saja dan dimana saja dengan mudah.</div>
 
-            <a href="#" class="btn btn-light btn-block mt-3 w-50 font-weight-bold d-none d-md-block d-lg-block d-xl-block">COBA 30 HARI GRATIS</a>
+            <a href="#" class="btn btn-light btn-block mt-3 w-50 font-weight-bold d-none d-md-block d-lg-block d-xl-block" data-toggle="modal" data-target="#modalLoginForm">COBA 30 HARI GRATIS</a>
 
             <!-- MOBILE VER -->
-            <a href="#" class="btn btn-light btn-block mt-3 font-weight-bold d-block d-sm-none">COBA 30 HARI GRATIS</a>
+            <a href="#" class="btn btn-light btn-block mt-3 font-weight-bold d-block d-sm-none" data-toggle="modal" data-target="#modalLoginForm">COBA 30 HARI GRATIS</a>
             <!-- MOBILE VER -->
             
             <div class="subhead text-white"> Hanya dengan Rp.50.000/Bulan, batalkan kapan saja </div>
@@ -28,7 +28,7 @@
 
         <p>Ebook, panduan, dan manual cara kerja kami yang terperinci mencakup topik-topik yang relevan dengan dunia yang bergerak cepat saat ini.</p>
 
-        <a href="about.html" class="btn btn-primary mt-4">Mulai Membaca!</a>
+        <a href="<?= site_url('Docs') ?>" class="btn btn-primary mt-4">Mulai Membaca!</a>
       </div>
       <div class="col-lg-6 py-3">
         <div class="about-img">
@@ -50,7 +50,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3 py-3 mb-3">
         <div class="text-center">
           <div class="img-fluid mb-4">
-            <img src="<?= base_url('assets')?>/assets_main/img/icons/web_development.svg" alt="">
+            <i class="h1 text-primary far fa-bookmark"></i>
           </div>
           <h5>Buku</h5>
         </div>
@@ -59,7 +59,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3 py-3 mb-3">
         <div class="text-center">
           <div class="img-fluid mb-4">
-            <img src="<?= base_url('assets')?>/assets_main/img/icons/graphics_design.svg" alt="">
+            <i class="h1 text-primary far fa-file-alt"></i>
           </div>
           <h5>Document</h5>
         </div>
@@ -68,7 +68,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3 py-3 mb-3">
         <div class="text-center">
           <div class="img-fluid mb-4">
-            <img src="<?= base_url('assets')?>/assets_main/img/icons/app_development.svg" alt="">
+            <i class="h1 text-primary fas fa-book-open"></i>
           </div>
           <h5>Majalah</h5>
         </div>
@@ -77,7 +77,7 @@
       <div class="col-md-6 col-lg-4 col-xl-3 py-3 mb-3">
         <div class="text-center">
           <div class="img-fluid mb-4">
-            <img src="<?= base_url('assets')?>/assets_main/img/icons/data_analyst.svg" alt="">
+            <i class="h1 text-primary fas fa-cut"></i>
           </div>
           <h5>SnapShot</h5>
         </div>
@@ -98,54 +98,44 @@
     </div>
 
     <div class="row mt-3">
-      <div class="col-lg-4 py-3">
-        <div class="recent-document">
-          <a href="<?= base_url('assets')?>/assets_main/img/portfolio/work-1.jpg" data-fancybox="portfolio">
-            <img src="<?= base_url('assets')?>/assets_main/img/portfolio/work-1.jpg" alt="">
-          </a>
-          <p class="title-section mt-3">Startup Accelerator Programmes: A Practice Guide</p>
-        </div>
-      </div>
-      <div class="col-lg-4 py-3">
-        <div class="recent-document">
-          <a href="<?= base_url('assets')?>/assets_main/img/portfolio/work-2.jpg" data-fancybox="portfolio">
-            <img src="<?= base_url('assets')?>/assets_main/img/portfolio/work-2.jpg" alt="">
-          </a>
-          <p class="title-section mt-3">Startup Accelerator Programmes: A Practice Guide</p>
-        </div>
-      </div>
-      <div class="col-lg-4 py-3">
-        <div class="recent-document">
-          <a href="<?= base_url('assets')?>/assets_main/img/portfolio/work-3.jpg" data-fancybox="portfolio">
-            <img src="<?= base_url('assets')?>/assets_main/img/portfolio/work-3.jpg" alt="">
-          </a>
-          <p class="title-section mt-3">Startup Accelerator Programmes: A Practice Guide</p>
-        </div>
-      </div>
-      <div class="col-lg-4 py-3">
-        <div class="recent-document">
-          <a href="<?= base_url('assets')?>/assets_main/img/portfolio/work-4.jpg" data-fancybox="portfolio">
-            <img src="<?= base_url('assets')?>/assets_main/img/portfolio/work-4.jpg" alt="">
-          </a>
-          <p class="title-section mt-3">Startup Accelerator Programmes: A Practice Guide</p>
-        </div>
-      </div>
-      <div class="col-lg-4 py-3">
-        <div class="recent-document">
-          <a href="<?= base_url('assets')?>/assets_main/img/portfolio/work-5.jpg" data-fancybox="portfolio">
-            <img src="<?= base_url('assets')?>/assets_main/img/portfolio/work-5.jpg" alt="">
-          </a>
-          <p class="title-section mt-3">Startup Accelerator Programmes: A Practice Guide</p>
-        </div>
-      </div>
-      <div class="col-lg-4 py-3">
-        <div class="recent-document">
-          <a href="<?= base_url('assets')?>/assets_main/img/portfolio/work-6.jpg" data-fancybox="portfolio">
-            <img src="<?= base_url('assets')?>/assets_main/img/portfolio/work-6.jpg" alt="">
-          </a>
-          <p class="title-section mt-3">Startup Accelerator Programmes: A Practice Guide</p>
-        </div>
-      </div>
+
+      <div class="container animated fadeIn animated-faster" id="menu_document" style="transition: ease 0.3s ;">
+        
+          <div class="row mt-1">
+            <?php foreach($getDocs as $indexData){?>
+              <div class="col-md-3 the-doc">
+                <div class="p-1 recent-document bg-white">
+                      <div class="row p-3">   
+                        <div class="doc-item col-6 col-md-12">
+                          <a href="<?= base_url('Docs/read/').md5($indexData['id']).'/'.urlencode((str_replace(' ', '-', $indexData['judul']))); ?>">
+                            <img class="doc-img" src="data:image/png;base64,<?= $indexData['thumbnail64']; ?>" alt="">
+                          </a>
+                        </div>
+
+                        <div class="col-6 col-md-12">
+                          <div class="subhead"> 
+                            <?php if($indexData['harga'] != '0'){ ?>
+                              <div class="badge badge-warning">PREMIUM</div>
+                            <?php }else{ ?>
+                              <div class="badge badge-info">FREE</div>
+                            <?php } ?>
+                          </div>
+                          <p class="font-weight-bold doc-title"><?= $indexData['judul']; ?></p>
+                          <div class="text-secondary block-ellipsis">
+                             <?= $indexData['desc']; ?>
+                          </div>
+                          <div class="mt-3 align-text-bottom text-right">
+                            <div class="subhead float-left text-primary"> <?= $indexData['jenis']; ?> </div>
+                            <button class="btn btn-dark btn-sm btn-circle"><i class="fas fa-bookmark"></i></button>
+                            <button class="btn btn-dark btn-sm btn-circle"><i class="fas fa-download"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+              </div>
+            <?php } ?> 
+          </div> 
+
     </div>
   </div> <!-- .container -->
 </div> <!-- .page-section -->

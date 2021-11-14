@@ -43,16 +43,79 @@
   <script src="<?= base_url('assets'); ?>/assets_main/js/theme.js"></script>
 
 </head>
+<style type="text/css">
+
+/* PRELOADER CSS */
+.page-loader{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: rgba(255,255,255,1);
+  z-index: 1000;
+}
+
+.txt{
+    color: #666;
+    text-align: center;
+    top: 40%;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+/* SPINNER ANIMATION */
+.spinner {
+  position: relative;
+  top: 35%;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background-color: #111;
+
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+</style>
 <body>
 
   <!-- Back to top button -->
   <div class="back-to-top"></div>
 
+  <div class="page-loader">
+    <div class="spinner"></div>
+    <div class="txt"><span class="text-primary">Loading</span><br>project pedia</span></div>
+  </div>
+
+  
   <header>
 
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container">
-        <a href="<?= site_url('Main') ?>" class="navbar-brand">Project<span class="text-primary">Pedia.</span></a>
+        <a href="<?= site_url('Main') ?>" class="navbar-brand">
+          <img src="<?= site_url('assets/images/v-logo.jpg') ?>" style="max-height: 64px !important">
+        </a>
 
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -67,10 +130,10 @@
               <a href="<?= site_url('Docs') ?>" class="nav-link m-1">Document</a>
             </li>
             <li class="nav-item">
-              <a href="<?= site_url('Register') ?>" class="nav-link m-1 btn btn-primary text-white">Register</a>
+              <a href="<?= site_url('Account/register') ?>" class="nav-link m-1 btn btn-primary text-white">Register</a>
             </li>
             <li class="nav-item">
-              <a href="<?= site_url('Login') ?>" class="nav-link m-1 mr-0 btn btn-outline-primary text-primary">Login</a>
+              <a class="nav-link m-1 mr-0 btn btn-outline-primary text-primary" data-toggle="modal" data-target="#modalLoginForm">Login</a>
             </li>
           </ul>
         </div>
@@ -130,6 +193,65 @@
       </div>
     </div>
   </footer>
-
 </body>
 </html>
+
+<!-- Modal -->
+<div class="modal fade"  id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7 p-5 text-center"> 
+               <img src="<?= base_url('assets/images/logo.jpeg') ?>">  
+               <p class="subhead">Selamat Datang, Kembali!</p>
+            </div>
+            <div class="col-md-5 p-5" style="border-left: 1px solid #ccc">
+              <div class="text-center h3 font-weight-bold mb-4">Masuk ke ProjectPedia.com</div>
+                
+                  <label>Email</label>
+                  <input type="email" id="email" class="form-control">
+                  <label>Password</label>
+                  <input type="password" id="password" class="form-control">
+                  <span class="subhead mt-1">Belum memiliki akun ? <a href="<?= site_url('Account/register') ?>" class="text-primary">Daftar</a></span>
+                  <button class="btn btn-outline-primary btn-block mt-2" id="loginBtn">
+                    Submit
+                    <span class="loader"></span>
+                  </button>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  
+</style>
+<script type="text/javascript">
+$(window).on('load',function(){
+  $('.page-loader').fadeOut(1000);
+});
+$(document).ready(function(){
+
+  $('#loginBtn').on('click', function(){
+    var email = $('#email').val();
+    var password = $('#password').val();
+
+    $.ajax({
+      url:'<?= site_url('Account/login_act') ?>',
+      type: 'POST',
+      data:{email:email, password:password},
+      success: function(data){
+        console.log(data);
+      },error: function(textStatus,errorThrown){
+        console.log('errorThrown'+'textStatus');
+      }
+    });
+
+  });
+
+});
+</script>

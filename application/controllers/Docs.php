@@ -51,11 +51,57 @@
 
 			function index(){
 
-				$data['page'] 				= 'docs';
+				$data['page'] 	= 'docs';
 
-				$data['getRandomCategory']	= $this->Docs_m->getRandCategory();
+				$data['randCat']   = $this->Docs_m->getRandCategory(3);
+
+				foreach ($data['randCat'] as $getCat){
+
+					$matchLabel = $getCat['label'];
+
+					$getDocs = $this->Docs_m->getDocs();
+
+					$docArray[$getCat['label']] = array();
+					
+					foreach($getDocs as $docs){
+
+						$doc_label = $docs['label'];
+
+						if($docs['label'] == $matchLabel){
+							array_push($docArray[$doc_label], $docs);
+						}
+						
+					}
+					
+	
+				}
+
+				$data['docArray'] = $docArray;
+
+				$data['categoryArray'] = $this->Docs_m->getCategory();
 
 				$this->template->load('main_page/base_v', 'main_page/docs_v',$data);
+
+			}
+
+			function search(){
+
+				$search = '';
+
+				if($this->input->post('search') != null){
+					$search = $this->input->post('search'); 
+				}else if($this->uri->segment(3) != null){
+					$search = $this->uri->segment(3); 
+				}
+
+				$data['page'] 	= 'docs';
+
+				$data['docArray'] = $this->Docs_m->getDocs($search);
+
+				$data['categoryArray'] = $this->Docs_m->getCategory();
+
+
+				$this->template->load('main_page/base_v', 'main_page/search_v',$data);
 
 			}
 

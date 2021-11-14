@@ -21,7 +21,9 @@
 <div class="page-section pt-4">
 	<div class="container animated fadeIn animated-faster" id="menu_document" style="transition: ease 0.3s ;">
 		<div class="col-12 p-0 pb-4">
-	        <input type="text" id="search" name="search" placeholder="Cari Disini ..." class="input form-control border-primary rounded-pill">
+	       	<form method="POST" action="<?= site_url('Docs/search') ?>">
+	          <input type="text" id="search" name="search" placeholder="Cari Disini ..." class="input form-control border-primary rounded-pill">
+	        </form>
 	    </div>
 	    <div class="row">
 	    	<div class="col-12 col-lg-8 p-0 container-fixed">
@@ -107,7 +109,7 @@
 	    pageNum = 1,
 	    pageRendering = false,
 	    pageNumPending = null,
-	    scale = 0.8,
+	    scale = 5,
 	    canvas = document.getElementById('pdf_renderer'),
 	    ctx = canvas.getContext('2d');
 
