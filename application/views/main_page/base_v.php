@@ -97,6 +97,33 @@
     opacity: 0;
   }
 }
+.overlay-login {
+  position: absolute;
+  background: rgba(0,0,0,0.7);
+  height: 100%;
+  width: 100%;
+}
+.loading-login {
+  height: 0;
+  width: 0;
+  padding: 15px;
+  border: 6px solid #ccc;
+  border-right-color: #888;
+  border-radius: 22px;
+  -webkit-animation: rotate 1s infinite linear;
+  /* left, top and position just for the demo! */
+  position: absolute;
+  left: 45%;
+  top: 45%;
+}
+
+@-webkit-keyframes rotate {
+  /* 100% keyframe for  clockwise. 
+     use 0% instead for anticlockwise */
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
 </style>
 <body>
 
@@ -197,18 +224,22 @@
 </html>
 
 <!-- Modal -->
-<div class="modal fade"  id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body p-0">
         <div class="container">
           <div class="row">
-            <div class="col-md-7 p-5 text-center"> 
+            <div class="col-md-7 d-none d-md-block p-5 text-center" style="border-right: 1px solid #ccc"> 
                <img src="<?= base_url('assets/images/logo.jpeg') ?>">  
                <p class="subhead">Selamat Datang, Kembali!</p>
             </div>
-            <div class="col-md-5 p-5" style="border-left: 1px solid #ccc">
-              <div class="text-center h3 font-weight-bold mb-4">Masuk ke ProjectPedia.com</div>
+            <div class="col-md-5 p-0">
+              <div id="loaderLogin" class="overlay-login d-none">
+                <div class="loading-login"></div>
+              </div>
+              <div class="p-5">
+                  <div class="text-center h3 font-weight-bold mb-4">Masuk ke ProjectPedia.com</div>
                 
                   <label>Email</label>
                   <input type="email" id="email" class="form-control">
@@ -219,7 +250,7 @@
                     Submit
                     <span class="loader"></span>
                   </button>
-                
+              </div>
             </div>
           </div>
         </div>
@@ -237,17 +268,26 @@ $(window).on('load',function(){
 $(document).ready(function(){
 
   $('#loginBtn').on('click', function(){
+
+    $('#loaderLogin').removeClass('d-none');
     var email = $('#email').val();
     var password = $('#password').val();
+
+    console.log(email+' / '+password);
 
     $.ajax({
       url:'<?= site_url('Account/login_act') ?>',
       type: 'POST',
       data:{email:email, password:password},
+      dataType:'json',
       success: function(data){
+        $('#loaderLogin').addClass('d-none');
+        console.log('success');
         console.log(data);
       },error: function(textStatus,errorThrown){
-        console.log('errorThrown'+'textStatus');
+        $('#loaderLogin').addClass('d-none');
+        console.log('error');
+        console.log(errorThrown+textStatus);
       }
     });
 

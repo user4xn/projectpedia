@@ -110,7 +110,7 @@ h6, .h6 {
 }
 
 .bg-primary-transparent {
-  background: linear-gradient(to left, rgba(255,0,0,0), rgb(211 185 126)) !important;
+  background: linear-gradient(to left, rgba(255,0,0,0), rgb(0 0 0)) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus {

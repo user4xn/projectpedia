@@ -75,13 +75,13 @@
 
 			}
 
-			function act_login(){
+			function login_act(){
 				
-		        $username = $this->input->post('email',TRUE);
-		        $password = $this->input->post('password',TRUE);
+		        $email = $this->input->post('email');
+		        $password = $this->input->post('password');
 
 		        $where = array(
-		            'username' => $username,
+		            'email' => $email,
 		            'password' => md5($password)
 		            );
 
@@ -89,7 +89,7 @@
 		        
 		        if($cek > 0){
 		                
-		            $query  = $this->Account_m->GetUser($username);
+		            $query  = $this->Account_m->GetUser($email);
 		        
 		            foreach ($query->result_array() as $values) {
 
@@ -111,12 +111,11 @@
 
 		            $this->session->set_userdata($data_session);
 		            
-		            redirect('Docs');
+		            echo json_encode($data_session);
 		 
 		        }else{
+		        	
 		            $this->session->set_flashdata('error','true');
-		            redirect(site_url(''));
-
 		        }
 		    }
 		 
