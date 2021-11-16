@@ -58,8 +58,6 @@
 
 				$this->template->load('main_page/base_v', 'main_page/index_v',$data);
 
-				var_dump($this->session->userdata());
-
 			}
 
 

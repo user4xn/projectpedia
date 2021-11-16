@@ -8,10 +8,10 @@
             <!-- MOBILE VER -->
             <div class="h4 subhead text-white">baca kapan saja dan dimana saja dengan mudah.</div>
 
-            <a href="#" class="btn btn-light btn-block mt-3 w-50 font-weight-bold d-none d-md-block d-lg-block d-xl-block" data-toggle="modal" data-target="#modalLoginForm">COBA 30 HARI GRATIS</a>
+            <a href="#" class="btn btn-light btn-block mt-3 w-50 font-weight-bold d-none d-md-block d-lg-block d-xl-block" data-toggle="modal" data-target="<?php echo $this->session->userdata('login_status') != 'logged_in' ? '#modalLoginForm' : '#modalSubscribeForm'; ?>">COBA 30 HARI GRATIS</a>
 
             <!-- MOBILE VER -->
-            <a href="#" class="btn btn-light btn-block mt-3 font-weight-bold d-block d-sm-none" data-toggle="modal" data-target="#modalLoginForm">COBA 30 HARI GRATIS</a>
+            <a href="#" class="btn btn-light btn-block mt-3 font-weight-bold d-block d-sm-none" data-toggle="modal" data-target="<?php echo $this->session->userdata('login_status') != 'logged_in' ? '#modalLoginForm' : '#modalSubscribeForm'; ?>">COBA 30 HARI GRATIS</a>
             <!-- MOBILE VER -->
             
             <div class="subhead text-white"> Hanya dengan Rp.50.000/Bulan, batalkan kapan saja </div>

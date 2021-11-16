@@ -67,7 +67,7 @@
 					'expiry_date'  	=> null,
 				);
 
-				$this->db->insert('user_previlege', $data);
+				$this->db->insert('user_previlege', $dataPrevilege);
 
 				$this->session->set_flashdata('status', 'ok');
 
@@ -83,7 +83,7 @@
 		        $where = array(
 		            'email' => $email,
 		            'password' => md5($password)
-		            );
+		        );
 
 		        $cek = $this->db->get_where("user",$where)->num_rows();
 		        
@@ -93,7 +93,7 @@
 		        
 		            foreach ($query->result_array() as $values) {
 
-		                $iduser = $values['iduser'];
+		                $id = $values['id'];
 		                $nama = $values['nama'];
 		                $email = $values['email'];
 		                $tipe_user = $values['tipe_user'];
@@ -102,27 +102,26 @@
 		            }
 		          
 		            $data_session = array(
-			            'id_user' => $iduser,
+			            'id_user' => $id,
 			            'nama' => $nama,
 			            'email' => $email,
 			            'tipe_user' => $tipe_user,
-			            'expiry_date' => $expiry_date
+			            'expiry_date' => $expiry_date,
+			            'login_status' => 'logged_in',
 		            );
 
 		            $this->session->set_userdata($data_session);
-		            
-		            echo json_encode($data_session);
+
+
+		            echo "success";
 		 
-		        }else{
-		        	
-		            $this->session->set_flashdata('error','true');
-		        }
+		        }else{}
 		    }
 		 
 		    function logout(){
 		        $this->session->sess_destroy();
 		        $this->session->set_flashdata('logout_notification', 'logged_out');
-		        redirect(site_url('Auth'));
+		        redirect(site_url('Main'));
 		    }
 
 

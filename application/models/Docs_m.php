@@ -15,6 +15,17 @@ class Docs_m extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    function getRecentDocs($limit=''){
+        return $this->db->query('
+            SELECT document.id,judul,file,document.desc,jenis,harga,to_base64(thumbnail) as thumbnail64, created_at, label 
+            FROM document 
+            JOIN category 
+            ON document.id = category.id_document
+            ORDER BY RAND()
+            LIMIT '.$limit.'
+            ')->result_array();
+    }
+
     function getDocs($search=''){
         $this->db->select('document.id,judul,file,document.desc,jenis,harga,to_base64(thumbnail) as thumbnail64, created_at, label')
                  ->from('document')

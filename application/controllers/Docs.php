@@ -118,12 +118,13 @@
 
 			function read(){
 
-				$id 			= $this->uri->segment(3);
+				$id 				= $this->uri->segment(3);
 				
-				$title 			= $this->uri->segment(4);
-				
+				$title 				= $this->uri->segment(4);
 
-				$isValid 		= $this->Docs_m->checkValidDocs($id, $title);
+				$data['recentDocs']	= $this->Docs_m->getRecentDocs(3);
+
+				$isValid 			= $this->Docs_m->checkValidDocs($id, $title);
 
 				if($isValid){
 					$data['page'] 	= 'docs';

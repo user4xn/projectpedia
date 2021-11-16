@@ -1,12 +1,18 @@
-<div class="page-banner bg-white">
-  <div class="container h-100">
-    <div class="row justify-content-center align-items-center h-100">
-      <div class="col-lg-12 h-100">
-      	<img src="<?= base_url('assets') ?>/images/page-banner.png"  style="border: 1px solid #ccc; width:100%; height: 100% !important;">
-      </div>
+
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-8 text-center text-md-left">
+      <div class="h3 font-weight-bold">Soft Opening, Ayo Berlangganan!</div>
+      <div>Akses buku dimana saja , kapan saja dengan mudah hanya dengan Rp.70.000/Bulan</div>
+      <a href="#" class="btn btn-primary mt-3 font-weight-bold" data-toggle="modal" data-target="<?php echo $this->session->userdata('login_status') != 'logged_in' ? '#modalLoginForm' : '#modalSubscribeForm'; ?>">COBA 30 HARI GRATIS</a>
+      <p class="mt-2">Batalkan kapan saja.</p>
+    </div>
+    <div class="col-md-4">
+      <img src="<?= base_url('assets') ?>/images/adsbook.jpg" class="w-100">
     </div>
   </div>
-</div> <!-- .page-banner -->
+</div>
+
 
 <div class="page-section pt-0">
 
@@ -98,7 +104,6 @@
         $(this).owlCarousel({
             margin:10,
             loop:true,
-            nav:true,
             autoplay: 3000,
             responsive : {
               // breakpoint from 0 up

@@ -8,6 +8,10 @@
 
   <title>ProjectPedia - Online Ebook Shop</title>
 
+  <link rel="icon" href="<?= base_url('assets') ?>/images/just-logo.ico" type="image/x-icon" />
+  
+  <link rel="shortcut icon" href="<?= base_url('assets') ?>/images/just-logo.ico" type="image/x-icon" />
+
   <link rel="stylesheet" href="<?= base_url('assets'); ?>/assets_main/css/bootstrap.css">
   
   <link rel="stylesheet" href="<?= base_url('assets'); ?>/assets_main/css/maicons.css">
@@ -156,12 +160,21 @@
             <li class="nav-item <?= $isHere = ($page == 'docs') ? 'active' : ''; ?>">
               <a href="<?= site_url('Docs') ?>" class="nav-link m-1">Document</a>
             </li>
-            <li class="nav-item">
-              <a href="<?= site_url('Account/register') ?>" class="nav-link m-1 btn btn-primary text-white">Register</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link m-1 mr-0 btn btn-outline-primary text-primary" data-toggle="modal" data-target="#modalLoginForm">Login</a>
-            </li>
+            <?php if($this->session->userdata('nama') != null){ ?>
+              <li class="nav-item">
+                <a href="#" class="nav-link m-1">Hi, <?= ucwords($this->session->userdata('nama')) ?></a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= site_url('Account/logout') ?>" class="nav-link m-1 mr-0 btn btn-outline-primary text-primary">Logout</a>
+              </li>
+            <?php }else{ ?>
+              <li class="nav-item">
+                <a href="<?= site_url('Account/register') ?>" class="nav-link m-1 btn btn-primary text-white">Register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link m-1 mr-0 btn btn-outline-primary text-primary" data-toggle="modal" data-target="#modalLoginForm">Login</a>
+              </li>
+            <?php } ?>
           </ul>
         </div>
       </div> <!-- .container -->
@@ -240,11 +253,13 @@
               </div>
               <div class="p-5">
                   <div class="text-center h3 font-weight-bold mb-4">Masuk ke ProjectPedia.com</div>
-                
                   <label>Email</label>
                   <input type="email" id="email" class="form-control">
                   <label>Password</label>
                   <input type="password" id="password" class="form-control">
+
+                  <center><div class="badge badge-warning my-3 animated fadeIn animated-faster d-none" id="alertLogin">Username / Password Tidak Ditemukan!</div></center>
+
                   <span class="subhead mt-1">Belum memiliki akun ? <a href="<?= site_url('Account/register') ?>" class="text-primary">Daftar</a></span>
                   <button class="btn btn-outline-primary btn-block mt-2" id="loginBtn">
                     Submit
@@ -258,9 +273,51 @@
     </div>
   </div>
 </div>
-<style type="text/css">
-  
-</style>
+
+<!-- Modal -->
+<div class="modal fade" id="modalSubscribeForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7 d-none d-md-block p-5 text-center" style="border-right: 1px solid #ccc"> 
+               <img src="<?= base_url('assets/images/logo.jpeg') ?>">  
+               <p class="subhead">Berlangganan untuk melanjutkan membaca. <br> Nikmati dokumen, buku, buku audio, dan banyak lagi lainnya tanpa batas </p>
+            </div>
+            <div class="col-md-5 p-0">
+              <div id="loaderLogin" class="overlay-login d-none">
+                <div class="loading-login"></div>
+              </div>
+              <div class="p-5">
+                  <div class="text-center h3 font-weight-bold">Hanya Rp.70.000/Bulan</div>
+                  <p class="text-center subhead">Batalkan kapan saja.</p>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="AvailablePaymentMethods-module_innerContent__1xaHt">
+                        <div class="mb-3 text-center">
+                          <img src="https://static.xendit.co/logos/ovo-logo.svg">
+                          <img src="https://static.xendit.co/logos/shopeepay-logo.svg">
+                          <img src="https://static.xendit.co/logos/dana-logo.svg">
+                          <img src="https://static.xendit.co/logos/linkaja-logo.svg">
+                          <img src="https://static.xendit.co/logos/qris-logo.svg">
+                          <img src="https://static.xendit.co/logos/kredivo-logo.svg"></div>
+                        </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-primary btn-block mt-2" id="paymentBtn">
+                    Berlangganan Sekarang
+                    <span class="loader"></span>
+                  </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 $(window).on('load',function(){
   $('.page-loader').fadeOut(1000);
@@ -273,24 +330,37 @@ $(document).ready(function(){
     var email = $('#email').val();
     var password = $('#password').val();
 
-    console.log(email+' / '+password);
-
     $.ajax({
       url:'<?= site_url('Account/login_act') ?>',
       type: 'POST',
-      data:{email:email, password:password},
-      dataType:'json',
-      success: function(data){
-        $('#loaderLogin').addClass('d-none');
-        console.log('success');
-        console.log(data);
-      },error: function(textStatus,errorThrown){
-        $('#loaderLogin').addClass('d-none');
-        console.log('error');
-        console.log(errorThrown+textStatus);
+      data: {email:email, password:password},
+      success: function(response){
+
+        console.log(response);
+
+        if(response){
+          $('#loaderLogin').fadeOut(2000);
+          window.location.href = '<?= site_url('Docs') ?>';
+          console.log('top');
+        }else{
+          $('#loaderLogin').fadeOut(2000);
+          $('#email').val('');
+          $('#password').val('');
+          $('#alertLogin').removeClass('d-none');
+          console.log('bot');
+        }
+
+      },error: function(errorThrown){
+
+        console.log(errorThrown);
+
       }
     });
 
+  });
+
+  $('#email').on('keyup', function(){
+    $('#alertLogin').addClass('d-none');
   });
 
 });

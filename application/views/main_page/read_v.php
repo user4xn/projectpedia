@@ -8,15 +8,19 @@
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.min.js"> </script>
-<div class="page-banner bg-white">
-  <div class="container h-100">
-    <div class="row justify-content-center align-items-center h-100">
-      <div class="col-lg-12 h-100">
-      	<img src="<?= base_url('assets') ?>/images/page-banner.png"  style="border: 1px solid #ccc; width:100%; height: 100% !important;">
-      </div>
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-8 text-center text-md-left">
+      <div class="h3 font-weight-bold">Soft Opening, Ayo Berlangganan!</div>
+      <div>Akses buku dimana saja , kapan saja dengan mudah hanya dengan Rp.70.000/Bulan</div>
+      <a href="#" class="btn btn-primary mt-3 font-weight-bold" data-toggle="modal" data-target="<?php echo $this->session->userdata('login_status') != 'logged_in' ? '#modalLoginForm' : '#modalSubscribeForm'; ?>">COBA 30 HARI GRATIS</a>
+      <p class="mt-2">Batalkan kapan saja.</p>
+    </div>
+    <div class="col-md-4">
+      <img src="<?= base_url('assets') ?>/images/adsbook.jpg" class="w-100">
     </div>
   </div>
-</div> <!-- .page-banner -->
+</div>
 
 <div class="page-section pt-4">
 	<div class="container animated fadeIn animated-faster" id="menu_document" style="transition: ease 0.3s ;">
@@ -29,28 +33,34 @@
 	    	<div class="col-12 col-lg-8 p-0 container-fixed">
 				<div id="my_pdf_viewer">
 					<div class="px-3">
+						<nav aria-label="breadcrumb">
+						  <ol class="breadcrumb p-0 bg-white">
+						    <li class="breadcrumb-item"><a class="text-primary" href="<?= site_url('Docs') ?>">Document</a></li>
+						    <li class="breadcrumb-item active" aria-current="page"><?= $fetchDoc['judul'] ?></li>
+						  </ol>
+						</nav>
 						<blockquote class="blockquote text-left">
 						  <p class="h3 mb-0"><?= $fetchDoc['judul'] ?></p>
-						  <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+						  <footer class="blockquote-footer">Know everything with <cite title="Source Title">ProjectPedia</cite></footer>
 						</blockquote>
 
 						<div>
 							<?= $fetchDoc['desc'] ?>
 						</div>
 						<div class="mt-3 align-text-bottom text-right">
-		                   <div class="subhead float-left text-primary">
-		                   	<span class="badge badge-primary"><?= $fetchDoc['jenis'] ?></span>
-		                   	  <?php if($fetchDoc['harga'] != '0'){ ?>
-	                          <div class="badge badge-warning">PREMIUM</div>
-	                        <?php }else{ ?>
-	                          <div class="badge badge-info">FREE</div>
-	                        <?php } ?>
-		                   </div>
-		                   <span class="text-secondary ml-3">Like (378)</span>
-		                   <button class="btn btn-info btn-circle"><i class="fas fa-thumbs-up"></i></button>
-		                   <span class="text-secondary ml-3">Dislike (48)</span>
-		                   <button class="btn btn-info btn-circle"><i class="fas fa-thumbs-down"></i></button>
-		                </div>
+		           <div class="subhead float-left text-primary">
+		           	<span class="badge badge-primary"><?= $fetchDoc['jenis'] ?></span>
+		           	  <?php if($fetchDoc['harga'] != '0'){ ?>
+	                  <div class="badge badge-warning">PREMIUM</div>
+	                <?php }else{ ?>
+	                  <div class="badge badge-info">FREE</div>
+	                <?php } ?>
+		           </div>
+		           <span class="text-secondary ml-3">Like (378)</span>
+		           <button class="btn btn-info btn-circle"><i class="fas fa-thumbs-up"></i></button>
+		           <span class="text-secondary ml-3">Dislike (48)</span>
+		           <button class="btn btn-info btn-circle"><i class="fas fa-thumbs-down"></i></button>
+		        </div>
 					</div>
 					<div id="navigation_controls" class="container mt-3 px-4"> 
 						<div class="item text-center p-2 row">
@@ -62,12 +72,12 @@
 					<div id="canvas_container" class="px-2"> 
 						<canvas id="pdf_renderer" style="border: 1px solid #ccc;overflow: auto;width: 100% !important;"></canvas> 
 					</div>
-					<div class="container px-4">
+					<div class="container px-4 mb-4">
 						<div class="item text-center p-2 row d-flex h-100">
-							<button class="btn btn-primary btn-sm ml-1">Download <i class="fas fa-download"></i></button> 
-							<button class="btn btn-primary btn-sm ml-1"><i class="fas fa-bookmark"></i></button> 
-							<div class="col text-white row justify-content-center align-self-center"><span>Jump to page :</span></div>
-							<input class="col-5 input input-sm form-control" id="current_page" value="1" type="number"/>
+							<button class="col-md-3 my-1 btn btn-primary ml-1">Download <i class="fas fa-download"></i></button> 
+							<button class="col-md-2 my-1 btn btn-primary ml-1"><i class="fas fa-bookmark"></i></button> 
+							<div class="col text-white row my-1 justify-content-center align-self-center"><span>Jump to page :</span></div>
+							<input class="col-5 input my-1 form-control" id="goto_page" value="1" type="number"/>
 						</div>
 					</div>  
 				</div>
@@ -82,16 +92,40 @@
 	    		</div>
 	    		<div class="subhead">*Harga diatas sudah termasuk PPN 10%</div>
 	    		<?php if($fetchDoc['harga'] == '0'){ ?>
-	    			<div class="btn btn-block btn-primary">Daftar Member</div><br>
+	    			<div class="btn btn-block btn-primary"data-toggle="modal" data-target="#modalSubscribeForm">Daftar Member</div><br>
 	    		<?php }else{ ?>		
-	    			<div class="btn btn-block btn-primary">Beli Item Ini</div><br>
+	    			<div class="btn btn-block btn-primary" data-toggle="modal" data-target="<?php echo $this->session->userdata('login_status') != 'logged_in' ? '#modalLoginForm' : '#modalSubscribeForm'; ?>">Beli Item Ini</div><br>
 	    		<?php } ?>	
-	    		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	    		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	    		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	    		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-	    		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-	    		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	    		<div class="container row">
+	    			<div class="h4 font-weight-bold">Dokumen Lainnya</div>
+	    			<div class="col-md-12 p-0">
+	    				<?php foreach($recentDocs as $rDoc){ ?>
+	    				<hr>
+	    				<div class="row p-3">   
+                <div class="doc-item col-6 col-md-12">
+                  <a href="<?= base_url('Docs/read/').md5($rDoc['id']).'/'.urlencode((str_replace(' ', '-', $rDoc['judul']))); ?>">
+                    <img class="doc-img" src="data:image/png;base64,<?= $rDoc['thumbnail64']; ?>" alt="">
+                  </a>
+                </div>
+
+                <div class="col-6 col-md-12">
+                  <div class="subhead"> 
+	    							<div class="badge badge-danger"> <?= $rDoc['jenis']; ?> </div>
+                    <?php if($rDoc['harga'] != '0'){ ?>
+                      <div class="badge badge-warning">PREMIUM</div>
+                    <?php }else{ ?>
+                      <div class="badge badge-info">FREE</div>
+                    <?php } ?>
+                  </div>
+                  <p class="font-weight-bold doc-title"><?= $rDoc['judul']; ?></p>
+                  <div class="text-secondary block-ellipsis">
+                     <?= $rDoc['desc']; ?>
+                  </div>
+                </div>
+              </div>
+            	<?php } ?>
+	    			</div>
+	    		</div>
 	    	</div>
 		</div>
 	</div>
@@ -109,9 +143,13 @@
 	    pageNum = 1,
 	    pageRendering = false,
 	    pageNumPending = null,
-	    scale = 5,
+	    scale = 2,
 	    canvas = document.getElementById('pdf_renderer'),
 	    ctx = canvas.getContext('2d');
+
+	var user_type = '<?= $this->session->userdata('tipe_user') ?>';
+
+	var books_type = '<?= $fetchDoc['harga'] ?>';
 
 	/**
 	 * Get page info from document, resize canvas accordingly, and render page.
@@ -175,12 +213,15 @@
 	 * Displays next page.
 	 */
 	function onNextPage() {
+
 	  if (pageNum >= pdfDoc.numPages) {
 	    return;
 	  }
 	  pageNum++;
 	  queueRenderPage(pageNum);
+
 	}
+
 	document.getElementById('go_next').addEventListener('click', onNextPage);
 
 	/**
@@ -192,5 +233,20 @@
 
 	  // Initial/first page rendering
 	  renderPage(pageNum);
+	});
+
+	$('#goto_page').bind("enterKey",function(e){
+		
+		requestedPage = parseInt($(this).val());
+
+   	queueRenderPage(requestedPage);
+
+	});
+
+	$('#goto_page').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+        $(this).trigger("enterKey");
+    }
 	});
 </script>
