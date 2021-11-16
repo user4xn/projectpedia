@@ -44,6 +44,19 @@ h6, .h6 {
   line-height: 1;
 }
 
+.dropdown-menu {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20%);
+    transition: all .5s;
+}
+.dropdown:hover .dropdown-menu{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0%);
+}
+
 .block-ellipsis {
   display: block;
   display: -webkit-box;
@@ -391,6 +404,12 @@ a.fg-light:hover, a.fg-light:focus {
 .btn:focus, .btn.focus {
   -webkit-box-shadow: none;
           box-shadow: none;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #fff !important;
+  text-decoration: none;
+  background-color: #d3b97e;
 }
 
 .btn-primary {

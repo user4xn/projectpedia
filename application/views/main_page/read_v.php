@@ -75,7 +75,7 @@
 					<div class="container px-4 mb-4">
 						<div class="item text-center p-2 row d-flex h-100">
 							<button class="col-md-3 my-1 btn btn-primary ml-1">Download <i class="fas fa-download"></i></button> 
-							<button class="col-md-2 my-1 btn btn-primary ml-1"><i class="fas fa-bookmark"></i></button> 
+							<button class="col-md-2 my-1 btn btn-primary ml-1" id="bookmarkBtn" data-id="<?= $fetchDoc['id'] ?>">Bmrk <i class="fas fa-bookmark"></i></button> 
 							<div class="col text-white row my-1 justify-content-center align-self-center"><span>Jump to page :</span></div>
 							<input class="col-5 input my-1 form-control" id="goto_page" value="1" type="number"/>
 						</div>
@@ -233,20 +233,5 @@
 
 	  // Initial/first page rendering
 	  renderPage(pageNum);
-	});
-
-	$('#goto_page').bind("enterKey",function(e){
-		
-		requestedPage = parseInt($(this).val());
-
-   	queueRenderPage(requestedPage);
-
-	});
-
-	$('#goto_page').keyup(function(e){
-    if(e.keyCode == 13)
-    {
-        $(this).trigger("enterKey");
-    }
 	});
 </script>

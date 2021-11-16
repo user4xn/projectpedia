@@ -161,8 +161,12 @@
               <a href="<?= site_url('Docs') ?>" class="nav-link m-1">Document</a>
             </li>
             <?php if($this->session->userdata('nama') != null){ ?>
-              <li class="nav-item">
-                <a href="#" class="nav-link m-1">Hi, <?= ucwords($this->session->userdata('nama')) ?></a>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link m-1 dropdown-toggle" data-toggle="dropdown">Hi, <?= ucwords($this->session->userdata('nama')) ?></a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">My Ebook</a>
+                    <a href="#" class="dropdown-item">Bookmarked Ebook</a>
+                </div>
               </li>
               <li class="nav-item">
                 <a href="<?= site_url('Account/logout') ?>" class="nav-link m-1 mr-0 btn btn-outline-primary text-primary">Logout</a>
