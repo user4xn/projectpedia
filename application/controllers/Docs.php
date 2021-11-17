@@ -134,6 +134,7 @@
 					$this->template->load('main_page/base_v', 'main_page/read_v',$data);
 				}else{
 					redirect('P/err404');
+
 				}
 			}
 

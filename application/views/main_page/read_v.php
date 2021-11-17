@@ -7,7 +7,7 @@
   	background-color: #333;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.min.js"> </script>
+<script src="<?= base_url('dist') ?>/pdfjs-legacy/build/pdf.js"> </script>
 <div class="container">
   <div class="row justify-content-center align-items-center">
     <div class="col-md-8 text-center text-md-left">
@@ -137,6 +137,7 @@
 	var url = '<?= base_url('assets/doc/').$fetchDoc['file'] ?>';
 
 	// Loaded via <script> tag, create shortcut to access PDF.js exports.
+	
 	var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
 	var pdfDoc = null,

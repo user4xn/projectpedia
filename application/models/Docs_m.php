@@ -49,7 +49,7 @@ class Docs_m extends CI_Model
     }
 
     function checkValidDocs($id, $title){
-        return $this->db->query('SELECT * FROM document WHERE md5(id) = "'.$id.'" AND judul = "'.urldecode(str_replace('-', ' ', $title).'"'))->row_array();
+        return $this->db->query('SELECT * FROM document WHERE md5(id) = "'.$id.'"')->row_array();
 
     }
 
